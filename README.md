@@ -21,10 +21,3 @@ Track books *and* equipment (tablets, cameras, lab gear) with a unified borrowin
 | Equipment | Table view, category icons, condition filter, CRUD modals |
 | Loans | Full transaction log, checkout modal, one-click return, status badges |
 | Members | Avatar cards, borrow history, role filter, add member |
-
-## Getting Started
-
-```bash
-npm install
-npm run dev
-```
