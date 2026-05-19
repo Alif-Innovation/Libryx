@@ -56,11 +56,7 @@ export default function Loans() {
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) { setErrors(errs); return }
-
-    const itemTitle = form.itemType === 'book'
-      ? selectedItem?.title
-      : selectedItem?.name
-
+    const itemTitle = form.itemType === 'book' ? selectedItem?.title : selectedItem?.name
     createTransaction({ ...form, itemTitle })
     setIsModalOpen(false)
     setForm(emptyForm)
@@ -79,11 +75,8 @@ export default function Loans() {
     setIsModalOpen(true)
   }
 
-  const statusOrder = { Overdue: 0, Active: 1, Returned: 2 }
-
   return (
     <div className="p-6 space-y-5">
-      {/* Controls */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex items-center gap-2 flex-1 h-9 bg-white border border-zinc-200 rounded-xl px-3 shadow-sm">
           <Search size={14} className="text-zinc-400 shrink-0" />
@@ -93,24 +86,16 @@ export default function Loans() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          {search && (
-            <button onClick={() => setSearch('')} className="text-zinc-400 hover:text-zinc-600"><X size={14} /></button>
-          )}
+          {search && (<button onClick={() => setSearch('')} className="text-zinc-400 hover:text-zinc-600"><X size={14} /></button>)}
         </div>
         <div className="flex gap-2">
-          <select
-            className="h-9 rounded-xl border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
-            value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}
-          >
+          <select className="h-9 rounded-xl border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
             <option value="All">All Status</option>
             <option value="Active">Active</option>
             <option value="Overdue">Overdue</option>
             <option value="Returned">Returned</option>
           </select>
-          <select
-            className="h-9 rounded-xl border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
-            value={filterType} onChange={(e) => setFilterType(e.target.value)}
-          >
+          <select className="h-9 rounded-xl border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30" value={filterType} onChange={(e) => setFilterType(e.target.value)}>
             <option value="All">All Types</option>
             <option value="book">Books</option>
             <option value="equipment">Equipment</option>
@@ -121,7 +106,6 @@ export default function Loans() {
 
       <p className="text-xs text-zinc-400">{filtered.length} transaction{filtered.length !== 1 ? 's' : ''}</p>
 
-      {/* Table */}
       {filtered.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-zinc-400">
           <ArrowLeftRight size={40} className="mb-3 opacity-30" />
@@ -156,22 +140,11 @@ export default function Loans() {
                     <p className="text-xs text-zinc-500">Due: <span className={t.status === 'Overdue' ? 'text-rose-600 font-medium' : 'text-zinc-700'}>{t.dueDate}</span></p>
                     {t.returnDate && <p className="text-xs text-zinc-500">Returned: <span className="text-emerald-600">{t.returnDate}</span></p>}
                   </td>
-                  <td className="px-4 py-3.5 hidden lg:table-cell">
-                    <Badge label={t.itemType} size="xs" />
-                  </td>
-                  <td className="px-4 py-3.5">
-                    <Badge label={t.status} />
-                  </td>
+                  <td className="px-4 py-3.5 hidden lg:table-cell"><Badge label={t.itemType} size="xs" /></td>
+                  <td className="px-4 py-3.5"><Badge label={t.status} /></td>
                   <td className="px-5 py-3.5 text-right">
                     {t.status !== 'Returned' && (
-                      <Button
-                        variant="secondary"
-                        size="xs"
-                        icon={<ArrowDownLeft size={11} />}
-                        onClick={() => returnTransaction(t.id)}
-                      >
-                        Return
-                      </Button>
+                      <Button variant="secondary" size="xs" icon={<ArrowDownLeft size={11} />} onClick={() => returnTransaction(t.id)}>Return</Button>
                     )}
                   </td>
                 </tr>
@@ -181,54 +154,29 @@ export default function Loans() {
         </div>
       )}
 
-      {/* New Loan Modal */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="New Loan / Checkout">
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
             <p className="text-xs text-indigo-700 font-medium">Checking out a new item. Select the borrower and item details below.</p>
           </div>
-
           <div className="grid grid-cols-2 gap-4">
-            <Input
-              label="Borrower Name *" id="borrowerName" placeholder="Full name"
-              value={form.borrowerName} onChange={(e) => field('borrowerName', e.target.value)}
-              error={errors.borrowerName}
-            />
-            <div>
-              <Select
-                label="Borrower (Member)" id="borrowerIdSelect"
-                value={form.borrowerId}
-                onChange={(e) => {
-                  const member = members.find((m) => m.id === e.target.value)
-                  if (member) {
-                    field('borrowerId', member.id)
-                    setForm((f) => ({ ...f, borrowerId: member.id, borrowerName: member.name }))
-                  } else {
-                    field('borrowerId', e.target.value)
-                  }
-                }}
-                error={errors.borrowerId}
-              >
-                <option value="">Select member…</option>
-                {members.map((m) => (
-                  <option key={m.id} value={m.id}>{m.name} ({m.id})</option>
-                ))}
-              </Select>
-            </div>
-
-            <Select
-              label="Item Type" id="itemType"
-              value={form.itemType} onChange={(e) => field('itemType', e.target.value)}
+            <Input label="Borrower Name *" id="borrowerName" placeholder="Full name" value={form.borrowerName} onChange={(e) => field('borrowerName', e.target.value)} error={errors.borrowerName} />
+            <Select label="Borrower (Member)" id="borrowerIdSelect" value={form.borrowerId}
+              onChange={(e) => {
+                const member = members.find((m) => m.id === e.target.value)
+                if (member) setForm((f) => ({ ...f, borrowerId: member.id, borrowerName: member.name }))
+                else field('borrowerId', e.target.value)
+              }}
+              error={errors.borrowerId}
             >
+              <option value="">Select member…</option>
+              {members.map((m) => <option key={m.id} value={m.id}>{m.name} ({m.id})</option>)}
+            </Select>
+            <Select label="Item Type" id="itemType" value={form.itemType} onChange={(e) => field('itemType', e.target.value)}>
               <option value="book">Book</option>
               <option value="equipment">Equipment</option>
             </Select>
-
-            <Select
-              label="Select Item *" id="itemId"
-              value={form.itemId} onChange={(e) => field('itemId', e.target.value)}
-              error={errors.itemId}
-            >
+            <Select label="Select Item *" id="itemId" value={form.itemId} onChange={(e) => field('itemId', e.target.value)} error={errors.itemId}>
               <option value="">Choose available item…</option>
               {availableItems.map((item) => (
                 <option key={item.id} value={item.id}>
@@ -236,19 +184,9 @@ export default function Loans() {
                 </option>
               ))}
             </Select>
-
-            <Input
-              label="Borrow Date *" id="borrowDate" type="date"
-              value={form.borrowDate} onChange={(e) => field('borrowDate', e.target.value)}
-              error={errors.borrowDate}
-            />
-            <Input
-              label="Due Date *" id="dueDate" type="date"
-              value={form.dueDate} onChange={(e) => field('dueDate', e.target.value)}
-              error={errors.dueDate}
-            />
+            <Input label="Borrow Date *" id="borrowDate" type="date" value={form.borrowDate} onChange={(e) => field('borrowDate', e.target.value)} error={errors.borrowDate} />
+            <Input label="Due Date *" id="dueDate" type="date" value={form.dueDate} onChange={(e) => field('dueDate', e.target.value)} error={errors.dueDate} />
           </div>
-
           {selectedItem && (
             <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-200 text-xs text-zinc-600">
               <p className="font-medium text-zinc-800 mb-1">Selected Item Preview</p>
@@ -258,7 +196,6 @@ export default function Loans() {
               }
             </div>
           )}
-
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="secondary" onClick={() => setIsModalOpen(false)} type="button">Cancel</Button>
             <Button type="submit" icon={<ArrowLeftRight size={14} />}>Confirm Checkout</Button>

@@ -1,16 +1,30 @@
-# React + Vite
+# Libryx
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern **Hybrid Library & Equipment Management System** for learning spaces.
 
-Currently, two official plugins are available:
+Track books *and* equipment (tablets, cameras, lab gear) with a unified borrowing engine.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+- **React 19** + **Vite 8**
+- **Tailwind CSS v3**
+- **Recharts** — activity trend chart
+- **date-fns** — date formatting & calculation
+- **Lucide React** — icons
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+| Module | Capabilities |
+|---|---|
+| Dashboard | Stat cards, weekly area chart, activity feed, overdue alert panel |
+| Books | Card grid, color covers, search/filter by status & category, add/edit/delete |
+| Equipment | Table view, category icons, condition filter, CRUD modals |
+| Loans | Full transaction log, checkout modal, one-click return, status badges |
+| Members | Avatar cards, borrow history, role filter, add member |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```

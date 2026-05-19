@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback } from 'react'
-import { format, isPast } from 'date-fns'
+import { format } from 'date-fns'
 import {
   initialBooks,
   initialEquipment,
