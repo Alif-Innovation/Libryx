@@ -87,7 +87,6 @@ export default function Books() {
 
   return (
     <div className="p-6 space-y-5">
-      {/* Controls */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex items-center gap-2 flex-1 h-9 bg-white border border-zinc-200 rounded-xl px-3 shadow-sm">
           <Search size={14} className="text-zinc-400 shrink-0" />
@@ -125,10 +124,8 @@ export default function Books() {
         </div>
       </div>
 
-      {/* Count */}
       <p className="text-xs text-zinc-400">{filtered.length} book{filtered.length !== 1 ? 's' : ''} found</p>
 
-      {/* Grid */}
       {filtered.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-zinc-400">
           <BookOpen size={40} className="mb-3 opacity-30" />
@@ -160,16 +157,10 @@ export default function Books() {
                 <div className="mt-3 pt-3 border-t border-zinc-100 flex items-center justify-between">
                   <p className="text-[10px] text-zinc-400 font-mono">{book.isbn}</p>
                   <div className="flex gap-1">
-                    <button
-                      onClick={() => openEdit(book)}
-                      className="p-1.5 rounded-lg text-zinc-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
-                    >
+                    <button onClick={() => openEdit(book)} className="p-1.5 rounded-lg text-zinc-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
                       <Pencil size={12} />
                     </button>
-                    <button
-                      onClick={() => deleteBook(book.id)}
-                      className="p-1.5 rounded-lg text-zinc-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-                    >
+                    <button onClick={() => deleteBook(book.id)} className="p-1.5 rounded-lg text-zinc-400 hover:text-rose-600 hover:bg-rose-50 transition-colors">
                       <Trash2 size={12} />
                     </button>
                   </div>
@@ -180,53 +171,24 @@ export default function Books() {
         </div>
       )}
 
-      {/* Modal */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title={editingBook ? 'Edit Book' : 'Add New Book'}
-      >
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={editingBook ? 'Edit Book' : 'Add New Book'}>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <Input
-                label="Title *" id="title" placeholder="Book title"
-                value={form.title} onChange={(e) => field('title', e.target.value)}
-                error={errors.title}
-              />
+              <Input label="Title *" id="title" placeholder="Book title" value={form.title} onChange={(e) => field('title', e.target.value)} error={errors.title} />
             </div>
-            <Input
-              label="Author *" id="author" placeholder="Author name"
-              value={form.author} onChange={(e) => field('author', e.target.value)}
-              error={errors.author}
-            />
-            <Input
-              label="ISBN *" id="isbn" placeholder="978-0-..."
-              value={form.isbn} onChange={(e) => field('isbn', e.target.value)}
-              error={errors.isbn}
-            />
-            <Input
-              label="Publisher" id="publisher" placeholder="Publisher name"
-              value={form.publisher} onChange={(e) => field('publisher', e.target.value)}
-            />
-            <Select
-              label="Category" id="category"
-              value={form.category} onChange={(e) => field('category', e.target.value)}
-            >
+            <Input label="Author *" id="author" placeholder="Author name" value={form.author} onChange={(e) => field('author', e.target.value)} error={errors.author} />
+            <Input label="ISBN *" id="isbn" placeholder="978-0-..." value={form.isbn} onChange={(e) => field('isbn', e.target.value)} error={errors.isbn} />
+            <Input label="Publisher" id="publisher" placeholder="Publisher name" value={form.publisher} onChange={(e) => field('publisher', e.target.value)} />
+            <Select label="Category" id="category" value={form.category} onChange={(e) => field('category', e.target.value)}>
               {BOOK_CATEGORIES.map((c) => <option key={c}>{c}</option>)}
             </Select>
-            <Input
-              label="Shelf Location *" id="shelfLocation" placeholder="e.g. A-01"
-              value={form.shelfLocation} onChange={(e) => field('shelfLocation', e.target.value)}
-              error={errors.shelfLocation}
-            />
+            <Input label="Shelf Location *" id="shelfLocation" placeholder="e.g. A-01" value={form.shelfLocation} onChange={(e) => field('shelfLocation', e.target.value)} error={errors.shelfLocation} />
             <div className="flex flex-col gap-1.5">
               <label className="text-sm font-medium text-zinc-700">Cover Color</label>
               <div className="flex flex-wrap gap-2 mt-0.5">
                 {COVER_COLORS.map((c) => (
-                  <button
-                    key={c} type="button"
-                    onClick={() => field('coverColor', c)}
+                  <button key={c} type="button" onClick={() => field('coverColor', c)}
                     className={`w-6 h-6 rounded-full bg-gradient-to-br ${coverGradients[c]} transition-transform ${form.coverColor === c ? 'ring-2 ring-offset-1 ring-indigo-500 scale-110' : 'hover:scale-105'}`}
                   />
                 ))}

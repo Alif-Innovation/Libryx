@@ -34,41 +34,14 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 space-y-6">
-      {/* Stats grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          label="Active Loans"
-          value={stats.totalActiveLoans}
-          icon={<ArrowLeftRight size={18} />}
-          color="indigo"
-          trend="Currently borrowed"
-        />
-        <StatCard
-          label="Overdue Items"
-          value={stats.totalOverdue}
-          icon={<AlertTriangle size={18} />}
-          color="rose"
-          trend="Needs attention"
-        />
-        <StatCard
-          label="Available Books"
-          value={`${stats.availableBooks}/${stats.totalBooks}`}
-          icon={<BookOpen size={18} />}
-          color="emerald"
-          trend="On the shelf"
-        />
-        <StatCard
-          label="Available Equipment"
-          value={`${stats.availableEquipment}/${stats.totalEquipment}`}
-          icon={<Package size={18} />}
-          color="violet"
-          trend="Ready to borrow"
-        />
+        <StatCard label="Active Loans" value={stats.totalActiveLoans} icon={<ArrowLeftRight size={18} />} color="indigo" trend="Currently borrowed" />
+        <StatCard label="Overdue Items" value={stats.totalOverdue} icon={<AlertTriangle size={18} />} color="rose" trend="Needs attention" />
+        <StatCard label="Available Books" value={`${stats.availableBooks}/${stats.totalBooks}`} icon={<BookOpen size={18} />} color="emerald" trend="On the shelf" />
+        <StatCard label="Available Equipment" value={`${stats.availableEquipment}/${stats.totalEquipment}`} icon={<Package size={18} />} color="violet" trend="Ready to borrow" />
       </div>
 
-      {/* Chart + Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-        {/* Trend chart */}
         <div className="lg:col-span-3 bg-white rounded-2xl border border-zinc-200 p-5 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -95,16 +68,13 @@ export default function Dashboard() {
               <CartesianGrid strokeDasharray="3 3" stroke="#f4f4f5" />
               <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#a1a1aa' }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 11, fill: '#a1a1aa' }} axisLine={false} tickLine={false} />
-              <Tooltip
-                contentStyle={{ borderRadius: '12px', border: '1px solid #e4e4e7', fontSize: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}
-              />
+              <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e4e4e7', fontSize: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }} />
               <Area type="monotone" dataKey="checkouts" stroke="#6366f1" strokeWidth={2} fill="url(#checkouts)" />
               <Area type="monotone" dataKey="returns" stroke="#10b981" strokeWidth={2} fill="url(#returns)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Recent activity */}
         <div className="lg:col-span-2 bg-white rounded-2xl border border-zinc-200 p-5 shadow-sm">
           <h3 className="text-sm font-semibold text-zinc-900 mb-4">Recent Activity</h3>
           <div className="space-y-3">
@@ -112,9 +82,7 @@ export default function Dashboard() {
               <div key={activity.id} className="flex items-start gap-3">
                 <ActivityIcon type={activity.type} />
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-medium text-zinc-800 truncate">
-                    {activity.user}
-                  </p>
+                  <p className="text-xs font-medium text-zinc-800 truncate">{activity.user}</p>
                   <p className="text-xs text-zinc-400 truncate">{activity.item}</p>
                 </div>
                 <div className="text-right shrink-0">
@@ -129,7 +97,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Overdue alert */}
       {overdueItems.length > 0 && (
         <div className="bg-rose-50 border border-rose-200 rounded-2xl p-5">
           <div className="flex items-center gap-2 mb-3">

@@ -66,7 +66,6 @@ export default function Members() {
 
   return (
     <div className="p-6 space-y-5">
-      {/* Controls */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex items-center gap-2 flex-1 h-9 bg-white border border-zinc-200 rounded-xl px-3 shadow-sm">
           <Search size={14} className="text-zinc-400 shrink-0" />
@@ -76,22 +75,15 @@ export default function Members() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          {search && (
-            <button onClick={() => setSearch('')} className="text-zinc-400 hover:text-zinc-600"><X size={14} /></button>
-          )}
+          {search && (<button onClick={() => setSearch('')} className="text-zinc-400 hover:text-zinc-600"><X size={14} /></button>)}
         </div>
         <div className="flex gap-2">
-          <select
-            className="h-9 rounded-xl border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
-            value={filterRole} onChange={(e) => setFilterRole(e.target.value)}
-          >
+          <select className="h-9 rounded-xl border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30" value={filterRole} onChange={(e) => setFilterRole(e.target.value)}>
             <option value="All">All Roles</option>
             <option value="Student">Student</option>
             <option value="Faculty">Faculty</option>
           </select>
-          <Button icon={<Plus size={14} />} onClick={() => { setForm(emptyForm); setErrors({}); setIsModalOpen(true) }}>
-            Add Member
-          </Button>
+          <Button icon={<Plus size={14} />} onClick={() => { setForm(emptyForm); setErrors({}); setIsModalOpen(true) }}>Add Member</Button>
         </div>
       </div>
 
@@ -119,19 +111,15 @@ export default function Members() {
                     <p className="text-xs text-zinc-400 truncate">{member.email}</p>
                   </div>
                 </div>
-
                 <div className="flex items-center gap-2 mb-4">
                   <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ring-1 ${
-                    member.role === 'Faculty'
-                      ? 'bg-violet-50 text-violet-700 ring-violet-200'
-                      : 'bg-sky-50 text-sky-700 ring-sky-200'
+                    member.role === 'Faculty' ? 'bg-violet-50 text-violet-700 ring-violet-200' : 'bg-sky-50 text-sky-700 ring-sky-200'
                   }`}>
                     {member.role === 'Faculty' ? <Briefcase size={10} /> : <GraduationCap size={10} />}
                     {member.role}
                   </span>
                   <span className="text-xs font-mono text-zinc-400">{member.id}</span>
                 </div>
-
                 <div className="grid grid-cols-2 gap-2 pt-3 border-t border-zinc-100">
                   <div className="text-center">
                     <p className="text-lg font-bold text-zinc-900">{active}</p>
@@ -150,20 +138,9 @@ export default function Members() {
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add New Member">
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <Input
-            label="Full Name *" id="name" placeholder="e.g. Alex Rivera"
-            value={form.name} onChange={(e) => field('name', e.target.value)}
-            error={errors.name}
-          />
-          <Input
-            label="Email *" id="email" type="email" placeholder="student@school.edu"
-            value={form.email} onChange={(e) => field('email', e.target.value)}
-            error={errors.email}
-          />
-          <Select
-            label="Role" id="role"
-            value={form.role} onChange={(e) => field('role', e.target.value)}
-          >
+          <Input label="Full Name *" id="name" placeholder="e.g. Alex Rivera" value={form.name} onChange={(e) => field('name', e.target.value)} error={errors.name} />
+          <Input label="Email *" id="email" type="email" placeholder="student@school.edu" value={form.email} onChange={(e) => field('email', e.target.value)} error={errors.email} />
+          <Select label="Role" id="role" value={form.role} onChange={(e) => field('role', e.target.value)}>
             <option>Student</option>
             <option>Faculty</option>
           </Select>
